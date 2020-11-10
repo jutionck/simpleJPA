@@ -1,6 +1,7 @@
 package com.enigmacamp.simplejpa.service;
 
 import com.enigmacamp.simplejpa.model.Customer;
+import com.enigmacamp.simplejpa.model.CustomerName;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface CustomerService {
     List<Customer> getAllCustomer();
 
     void printList(List<Customer> customers);
+
+    List<Customer> getCustomerByName(CustomerName containingBy, String name);
 }

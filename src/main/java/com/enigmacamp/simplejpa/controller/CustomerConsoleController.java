@@ -1,6 +1,7 @@
 package com.enigmacamp.simplejpa.controller;
 
 import com.enigmacamp.simplejpa.model.Customer;
+import com.enigmacamp.simplejpa.model.CustomerName;
 import com.enigmacamp.simplejpa.service.CustomerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,13 +20,20 @@ public class CustomerConsoleController implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Insert Data to table m_customer
-        Customer newCustomer = new Customer();
-        newCustomer.setFirstName("Jution");
-        newCustomer.setLastName("Kirana");
-        customerService.registration(newCustomer);
+        //Customer newCustomer = new Customer();
+        //newCustomer.setFirstName("Jution");
+        //newCustomer.setLastName("Kirana");
+        //customerService.registration(newCustomer);
+
         //Get All Data
-        List<Customer> customers = customerService.getAllCustomer();
+        //List<Customer> customers = customerService.getAllCustomer();
+        //customerService.printList(customers);
+
+        //Get by LIKE
+        List<Customer> customers = customerService.getCustomerByName(CustomerName.FIRSTNAME_CONTAINING, "J");
         customerService.printList(customers);
 
+        List<Customer> customers1 = customerService.getCustomerByName(CustomerName.FIRSTNAME_CONTAINING, "A");
+        customerService.printList(customers1);
     }
 }

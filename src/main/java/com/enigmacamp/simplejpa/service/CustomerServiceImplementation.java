@@ -3,8 +3,13 @@ package com.enigmacamp.simplejpa.service;
 import com.enigmacamp.simplejpa.model.Customer;
 import com.enigmacamp.simplejpa.model.CustomerName;
 import com.enigmacamp.simplejpa.repository.CustomerRepo;
+import com.enigmacamp.simplejpa.utils.SortDirection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,10 +44,35 @@ public class CustomerServiceImplementation implements CustomerService {
         return null;
     }
 
+    //Pagination
     @Override
-    public List<Customer> getAllCustomer() {
-        return customerRepo.findAll();
+    public Page<Customer> getAllCustomer(int page, int size, String[] sort) {
+        List<Sort.Order> orders = new ArrayList<>();
+        for(String ord : sort) {
+            String[] _order = ord.split(",");
+            orders.add(new Sort.Order(new SortDirection().getSortDirection(_order[1]), _order[0]));
+        }
+        Pageable paging = PageRequest.of(page,size, Sort.by(orders));
+        Page<Customer> customerPaging = customerRepo.findAll(paging);
+        return customerPaging;
     }
+
+//    @Override
+//    public List<Customer> getAllCustomer(int page, int size) {
+//        Pageable paging = PageRequest.of(page,size);
+//        Page<Customer> customerPaging = customerRepo.findAll(paging);
+//
+//        return customerPaging.getContent();
+//
+//        //atau
+//        //List<Customer> customers = customerPaging.getContent();
+//        //        return customers;
+//    }
+
+//    @Override
+//    public List<Customer> getAllCustomer() {
+//        return customerRepo.findAll();
+//    }
 
     @Override
     public void printList(List<Customer> customers) {

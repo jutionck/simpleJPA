@@ -2,6 +2,7 @@ package com.enigmacamp.simplejpa.service;
 
 import com.enigmacamp.simplejpa.model.Customer;
 import com.enigmacamp.simplejpa.model.CustomerName;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,7 +14,12 @@ public interface CustomerService {
 
     Customer unregistration(String customerId);
 
-    List<Customer> getAllCustomer();
+    //Dipakai jika tidak pakai pagination
+    //List<Customer> getAllCustomer();
+
+    //Pagination
+    //List<Customer> getAllCustomer(int page, int size);
+    Page<Customer> getAllCustomer(int page, int size, String[] sort);
 
     void printList(List<Customer> customers);
 

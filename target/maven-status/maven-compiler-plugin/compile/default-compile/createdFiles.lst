@@ -1,0 +1,6 @@
+com/enigmacamp/simplejpa/repository/CustomerRepo.class
+com/enigmacamp/simplejpa/controller/CustomerConsoleController.class
+com/enigmacamp/simplejpa/model/Customer.class
+com/enigmacamp/simplejpa/service/CustomerServiceImplementation.class
+com/enigmacamp/simplejpa/App.class
+com/enigmacamp/simplejpa/service/CustomerService.class

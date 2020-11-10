@@ -1,6 +1,5 @@
 ### Spring JPA
 
-Langkah-langhkah pembuatan
 1. Silahkan clone aplikasi ini jika tidak ingin membuat dari awal
 2. Siapkan terlebih dahulu database, disini kita memakai database MySQL
 3. Konfigurasi environment nya adalah sebagai berikut :

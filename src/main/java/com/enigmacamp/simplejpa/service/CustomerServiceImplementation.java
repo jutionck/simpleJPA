@@ -3,10 +3,7 @@ package com.enigmacamp.simplejpa.service;
 import com.enigmacamp.simplejpa.model.Customer;
 import com.enigmacamp.simplejpa.model.CustomerRegistration;
 import com.enigmacamp.simplejpa.model.UserAccount;
-import com.enigmacamp.simplejpa.repository.CustomerRepo;
-import com.enigmacamp.simplejpa.repository.CustomerSpecification;
-import com.enigmacamp.simplejpa.repository.SearchCriteria;
-import com.enigmacamp.simplejpa.repository.UserAccountRepo;
+import com.enigmacamp.simplejpa.repository.*;
 import com.enigmacamp.simplejpa.utils.SortDirection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +25,6 @@ public class CustomerServiceImplementation implements CustomerService {
 
     CustomerRepo customerRepo;
     UserAccountRepo userAccountRepo;
-    SearchCriteria searchCriteria;
 
     //Automatically autowired if there is only 1 constructor, @autowired is not needed
     CustomerServiceImplementation(CustomerRepo customerRepo, UserAccountRepo userAccountRepo) {
@@ -78,7 +74,12 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public List<Customer> findCustomer(SearchCriteria searchCriteria) {
-        return customerRepo.findAll(new CustomerSpecification(searchCriteria));
+        return customerRepo.findAll(CustomerSpec.single(searchCriteria));
+    }
+
+    @Override
+    public List<Customer> findCustomer(List<SearchCriteria> searchCriteria) {
+        return customerRepo.findAll(CustomerSpec.multi(searchCriteria));
     }
 
 }

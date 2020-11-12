@@ -14,14 +14,17 @@ public class Customer {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    private String firstName, lastName;
+    private String firstName;
+    private String lastName;
+    private String address;
 
     public Customer() {}
 
-    public Customer(String id, String firstName, String lastName) {
+    public Customer(String id, String firstName, String lastName, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
     }
 
     public String getId() {
@@ -48,12 +51,21 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

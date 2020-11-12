@@ -19,5 +19,7 @@ public interface CustomerService {
 
     void printList(List<Customer> customers);
 
-    List<Customer> findCustomer(SearchCriteria criteria);
+    List<Customer> findCustomer(SearchCriteria searchCriteria);
+
+    List<Customer> findCustomer(List<SearchCriteria> searchCriteria);
 }

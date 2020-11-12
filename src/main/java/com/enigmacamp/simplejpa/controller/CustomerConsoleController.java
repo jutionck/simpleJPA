@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,12 +63,25 @@ public class CustomerConsoleController implements CommandLineRunner {
         log.debug(jsonUtils.create(response));
     }
 
+    private void advancedSearchCustomer() {
+        List<SearchCriteria> criteriaList = new ArrayList<>();
+        criteriaList.add(new SearchCriteria("firstName", CriteriaOperation.START_WITH, "E"));
+        criteriaList.add(new SearchCriteria("address", CriteriaOperation.START_WITH, "J"));
+        List<Customer> customers = customerService.findCustomer(criteriaList);
+        SimpleResponse<List<Customer>> response = new SimpleResponse<>();
+        response.setMessage("SUCCESS");
+        response.setData(customers);
+        log.debug(jsonUtils.create(response));
+    }
+
     @Override
     //Running aplikasi
     public void run(String... args) throws Exception {
+        //Insert Data
        //customerRegistrationForm("Edo", "Hokage", "edo.hokage", "1234");
 
-        searchCustomer("D");
+        //searchCustomer("D");
+        advancedSearchCustomer();
 
     }
 }

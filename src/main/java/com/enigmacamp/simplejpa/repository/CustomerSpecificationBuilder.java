@@ -6,11 +6,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
-public class CustomerSpecification implements Specification<Customer> {
+public class CustomerSpecificationBuilder implements Specification<Customer> {
     private final SearchCriteria criteria;
 
-    public CustomerSpecification(SearchCriteria criteria) {
+    public CustomerSpecificationBuilder(SearchCriteria criteria) {
         this.criteria = criteria;
     }
 
@@ -23,6 +24,7 @@ public class CustomerSpecification implements Specification<Customer> {
     public Specification<Customer> or(Specification<Customer> other) {
         return null;
     }
+
 
     @Override
     public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -39,4 +41,5 @@ public class CustomerSpecification implements Specification<Customer> {
                 return null;
         }
     }
+
 }

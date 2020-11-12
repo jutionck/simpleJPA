@@ -3,6 +3,8 @@ package com.enigmacamp.simplejpa.controller;
 import com.enigmacamp.simplejpa.model.Customer;
 import com.enigmacamp.simplejpa.model.CustomerRegistration;
 import com.enigmacamp.simplejpa.model.UserAccount;
+import com.enigmacamp.simplejpa.repository.CriteriaOperation;
+import com.enigmacamp.simplejpa.repository.SearchCriteria;
 import com.enigmacamp.simplejpa.service.CustomerService;
 import com.enigmacamp.simplejpa.utils.ErrorMessage;
 import com.enigmacamp.simplejpa.utils.JsonUtils;
@@ -14,6 +16,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 //CommandLineRunner akan menampilkan informasi hanya di terminal di IDE
@@ -51,49 +54,20 @@ public class CustomerConsoleController implements CommandLineRunner {
         }
     }
 
+    private void searchCustomer(String value) {
+        List<Customer> customers = customerService.findCustomer(new SearchCriteria("firstName", CriteriaOperation.START_WITH, value));
+        SimpleResponse<List<Customer>> response = new SimpleResponse<>();
+        response.setMessage("SUCCESS");
+        response.setData(customers);
+        log.debug(jsonUtils.create(response));
+    }
+
     @Override
     //Running aplikasi
     public void run(String... args) throws Exception {
-        //Insert Data to table m_customer
-//        Customer newCustomer = new Customer();
-//        newCustomer.setFirstName("Destry");
-//        newCustomer.setLastName("Faradila");
-//        customerService.registration(newCustomer);
+       //customerRegistrationForm("Edo", "Hokage", "edo.hokage", "1234");
 
-        //Get All Data
-        //List<Customer> customers = customerService.getAllCustomer();
-        //customerService.printList(customers);
-
-        //Get by LIKE
-        //List<Customer> customers = customerService.getCustomerByName(CustomerName.FIRSTNAME_CONTAINING, "J");
-        //customerService.printList(customers);
-
-        //List<Customer> customers1 = customerService.getCustomerByName(CustomerName.FIRSTNAME_CONTAINING, "A");
-        //customerService.printList(customers1);
-
-        //View with pagination
-//        List<Customer> customers = customerService.getAllCustomer(0,2);
-//        customerService.printList(customers);
-//
-//        List<Customer> customers1 = customerService.getAllCustomer(1,2);
-//        customerService.printList(customers1);
-
-//        String[] sorting = {"lastName,asc"};
-//        Page<Customer> customers = customerService.getAllCustomer(0,2, sorting);
-//        ResponsePaging<List<Customer>> responsePaging = new ResponsePaging<>();
-//        responsePaging.setMessage("SUCCESS");
-//        responsePaging.setData(customers.getContent());
-//        responsePaging.setCurrentPage(customers.getNumber());
-//        responsePaging.setTotalItems(customers.getTotalElements());
-//        responsePaging.setTotalPages(customers.getTotalPages());
-//
-//        ObjectMapper om = new ObjectMapper();
-//        String jsonString = om.writeValueAsString(responsePaging);
-        //Print out json result in command liner
-//        System.out.println(jsonString);
-//        log.debug(jsonString);
-       customerRegistrationForm("Edo", "Hokage", "edo.hokage", "1234");
-
+        searchCustomer("D");
 
     }
 }

@@ -20,6 +20,7 @@ public class UserAccount {
     private String userPassword;
     private int isActive;
 
+
     public String getUserId() {
         return userId;
     }

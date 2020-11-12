@@ -1,10 +1,11 @@
 package com.enigmacamp.simplejpa.service;
 
 import com.enigmacamp.simplejpa.model.Customer;
-import com.enigmacamp.simplejpa.model.CustomerName;
 import com.enigmacamp.simplejpa.model.CustomerRegistration;
 import com.enigmacamp.simplejpa.model.UserAccount;
 import com.enigmacamp.simplejpa.repository.CustomerRepo;
+import com.enigmacamp.simplejpa.repository.CustomerSpecification;
+import com.enigmacamp.simplejpa.repository.SearchCriteria;
 import com.enigmacamp.simplejpa.repository.UserAccountRepo;
 import com.enigmacamp.simplejpa.utils.SortDirection;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     CustomerRepo customerRepo;
     UserAccountRepo userAccountRepo;
+    SearchCriteria searchCriteria;
 
     //Automatically autowired if there is only 1 constructor, @autowired is not needed
     CustomerServiceImplementation(CustomerRepo customerRepo, UserAccountRepo userAccountRepo) {
@@ -47,12 +49,6 @@ public class CustomerServiceImplementation implements CustomerService {
         return newCustomer;
     }
 
-    //Insert Data
-//    @Override
-//    public Customer registration(Customer customer) {
-//        return customerRepo.save(customer);
-//    }
-
     @Override
     public Customer activation(String customerId) {
        return customerRepo.getOne(customerId);
@@ -72,26 +68,8 @@ public class CustomerServiceImplementation implements CustomerService {
             orders.add(new Sort.Order(new SortDirection().getSortDirection(_order[1]), _order[0]));
         }
         Pageable paging = PageRequest.of(page,size, Sort.by(orders));
-        Page<Customer> customerPaging = customerRepo.findAll(paging);
-        return customerPaging;
+        return customerRepo.findAll(paging);
     }
-
-//    @Override
-//    public List<Customer> getAllCustomer(int page, int size) {
-//        Pageable paging = PageRequest.of(page,size);
-//        Page<Customer> customerPaging = customerRepo.findAll(paging);
-//
-//        return customerPaging.getContent();
-//
-//        //atau
-//        //List<Customer> customers = customerPaging.getContent();
-//        //        return customers;
-//    }
-
-//    @Override
-//    public List<Customer> getAllCustomer() {
-//        return customerRepo.findAll();
-//    }
 
     @Override
     public void printList(List<Customer> customers) {
@@ -99,21 +77,8 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public List<Customer> getCustomerByName(CustomerName containingBy, String name) {
-        List<Customer> customers = new ArrayList<>();
-        switch (containingBy) {
-            case FIRSTNAME_CONTAINING:
-                customers = customerRepo.findByFirstNameContaining(name);
-                break;
-            case LASTNAME_CONTAINING:
-                customers = customerRepo.findByLastNameContaining(name);
-                break;
-            case FIRSTNAME_STARTING:
-                customers = customerRepo.findCustomerFirstNameStartWith(name);
-                break;
-        }
-        return customers;
+    public List<Customer> findCustomer(SearchCriteria searchCriteria) {
+        return customerRepo.findAll(new CustomerSpecification(searchCriteria));
     }
-
 
 }

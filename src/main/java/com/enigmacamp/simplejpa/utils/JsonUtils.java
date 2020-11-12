@@ -14,8 +14,7 @@ public class JsonUtils {
     public String create(Object response) {
         ObjectMapper om = new ObjectMapper();
         try {
-            String jsonString = om.writeValueAsString(response);
-            return  jsonString;
+            return om.writeValueAsString(response);
         } catch (JsonProcessingException e) {
             log.error(e.getLocalizedMessage());
             return "";
